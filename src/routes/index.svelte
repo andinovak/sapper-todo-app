@@ -1,6 +1,6 @@
 <script>
-  export let name;
-  import Login from "../components/Login.svelte";
+  import Todos from "../components/Todos.svelte";
+  import { user } from "../stores.js";
 </script>
 
 <style>
@@ -10,8 +10,13 @@
 </style>
 
 <svelte:head>
-  <title>🔥 Svelte 💯</title>
+  <title>💯Svelte Todos💯</title>
 </svelte:head>
 
-<h1>🔥 Hello {name}! 🔥</h1>
-<Login />
+{#if $user}
+  <h1>🔥 Hello {$user.displayName}! 🔥</h1>
+  <h2>Here are your Todos:</h2>
+  <Todos uid={$user.uid} />
+{:else}
+  <p>Log in to see your Todos</p>
+{/if}
