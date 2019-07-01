@@ -1,6 +1,6 @@
 <script>
   export let name;
-  import Login from "../components/login.svelte";
+  import Login from "../components/Login.svelte";
 </script>
 
 <style>
