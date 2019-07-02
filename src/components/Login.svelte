@@ -1,5 +1,6 @@
 <script>
   import { user } from "../stores.js";
+  import AppButton from "./AppButton.svelte";
   import Profile from "./Profile.svelte";
   import { authState } from "rxfire/auth";
   import { auth, db, googleProvider } from "../firebase";
@@ -10,26 +11,10 @@
   };
 </script>
 
-<style>
-  button {
-    border: none;
-    background: hsl(14, 100%, 62%);
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: white;
-    padding: 0.5rem 1.5rem;
-    border-radius: 0.3rem;
-    cursor: pointer;
-  }
-  button:hover {
-    background: hsl(14, 100%, 69%);
-  }
-</style>
-
 <section>
   {#if $user}
-    <button on:click={() => auth.signOut()}>Logout</button>
+    <AppButton secondary on:click={() => auth.signOut()}>🚢 Log out</AppButton>
   {:else}
-    <button on:click={login}>🌲Log in</button>
+    <AppButton on:click={login}>🌲 Log in</AppButton>
   {/if}
 </section>

@@ -1,7 +1,8 @@
 <script>
   import { fade, fly } from "svelte/transition";
-
   import { createEventDispatcher } from "svelte";
+
+  import IconButton from "./IconButton.svelte";
 
   const dispatch = createEventDispatcher();
 
@@ -20,6 +21,7 @@
   export let id; // document ID
   export let text;
   export let complete;
+  export let even;
 </script>
 
 <style>
@@ -27,9 +29,14 @@
     text-decoration: line-through;
     color: green;
   }
+
   span {
-    font-size: 2rem;
     margin: 1rem 2rem;
+  }
+  @media only screen and (max-width: 600px) {
+    span {
+      margin: 0.5rem;
+    }
   }
   li {
     list-style: none;
@@ -38,20 +45,20 @@
     align-items: center;
   }
 
-  li:nth-child(even) {
+  li.even {
     background: rgb(185, 185, 185);
   }
 </style>
 
-<li in:fly={{ x: 900, duration: 500 }}>
-  <span class:complete> {text} </span>
+<li in:fly={{ x: 900, duration: 500 }} class:even>
+  <span class:complete>{text}</span>
 
   <span>
     {#if complete}
-      <button on:click={toggleStatus}>✔️</button>
+      <IconButton dark={!even} on:click={toggleStatus}>✔️</IconButton>
     {:else}
-      <button on:click={toggleStatus}>❌</button>
+      <IconButton dark={!even} on:click={toggleStatus}>❌</IconButton>
     {/if}
-    <button on:click={remove}>🗑</button>
+    <IconButton warn on:click={remove}>🗑</IconButton>
   </span>
 </li>

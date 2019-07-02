@@ -1,15 +1,17 @@
 <script>
   import { onMount } from "svelte";
-  import TodoItem from "./TodoItem.svelte";
   import { collectionData } from "rxfire/firestore";
   import { startWith } from "rxjs/operators";
   import { db } from "../firebase";
 
+  import TodoItem from "./TodoItem.svelte";
+  import AppInput from "./AppInput.svelte";
+  import AppButton from "./AppButton.svelte";
   // User ID passed from parent
   export let uid;
 
   // Form Text
-  let text = "some task";
+  let text = "I need to...";
 
   // Query requires an index
   const query = db
@@ -45,20 +47,21 @@
 </script>
 
 <style>
-  input {
-    display: block;
-  }
   ul {
     padding: 0;
   }
 </style>
 
 <ul>
-  {#each $todos as todo}
-    <TodoItem {...todo} on:remove={removeItem} on:toggle={updateStatus} />
+  {#each $todos as todo, i}
+    <TodoItem
+      even={i % 2 == 0}
+      {...todo}
+      on:remove={removeItem}
+      on:toggle={updateStatus} />
   {/each}
 </ul>
 
-<input bind:value={text} />
+<AppInput secondary {text} />
 
-<button on:click={add}>Add Task</button>
+<AppButton on:click={add}>📋 Add Task</AppButton>
