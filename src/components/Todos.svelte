@@ -1,5 +1,6 @@
 <script>
   import { onMount } from "svelte";
+
   import { collectionData } from "rxfire/firestore";
   import { startWith } from "rxjs/operators";
   import { db } from "../firebase";
@@ -11,7 +12,8 @@
   export let uid;
 
   // Form Text
-  let text = "I need to...";
+  const initialText = "I need to...";
+  let text = initialText;
 
   // Query requires an index
   const query = db
@@ -28,7 +30,7 @@
       complete: false,
       created: Date.now()
     });
-    text = "";
+    text = initialText;
   }
 
   function updateStatus(event) {
@@ -62,6 +64,6 @@
   {/each}
 </ul>
 
-<AppInput secondary {text} />
+<AppInput secondary bind:text />
 
 <AppButton on:click={add}>📋 Add Task</AppButton>

@@ -3,7 +3,7 @@
   export let secondary;
 
   // Export prop for input text
-  export let text;
+  export let text = "";
 </script>
 
 <style>
@@ -23,7 +23,6 @@
 
     font-size: 1.25rem;
     font-weight: bold;
-    user-select: all;
   }
   input.secondary {
     border: 4px solid var(--theme-secondary);
