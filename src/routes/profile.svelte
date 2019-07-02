@@ -5,7 +5,7 @@
 
 <section>
   {#if $user}
-    <Profile {...$user} />
+    <Profile />
   {:else}
     <p>Log in to see your profile.</p>
   {/if}

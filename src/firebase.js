@@ -1,6 +1,5 @@
 import * as firebase from "firebase";
-import "firebase/database";
-import { firebaseConfig } from "./firebase-config"; //<-- Firebase initialization config json
+import { firebaseConfig } from "./firebase-config";
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
