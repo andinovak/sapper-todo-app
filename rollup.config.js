@@ -40,7 +40,8 @@ export default {
                         "initializeApp",
                         "firestore",
                         "auth"
-                    ]
+                    ],
+                    "node_modules/zdog/dist/zdog.dist.js": ["Zdog"]
                 }
             }),
 
