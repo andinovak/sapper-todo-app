@@ -8,7 +8,7 @@
   }
 
   // Export prop for secondary color theme
-  export let dark, warn;
+  export let dark, warn, primary, secondary;
 </script>
 
 <style>
@@ -37,6 +37,12 @@
   button.warn {
     background: var(--ui-warn);
   }
+  button.primary {
+    background: var(--theme-primary);
+  }
+  button.secondary {
+    background: var(--theme-secondary);
+  }
   button:hover:after {
     content: "";
     position: absolute;
@@ -53,6 +59,8 @@
   }
 </style>
 
-<button class={warn ? `warn` : dark ? `dark` : ``} on:click={click}>
+<button
+  class={warn ? `warn` : dark ? `dark` : secondary ? `secondary` : primary ? `primary` : ``}
+  on:click={click}>
   <slot />
 </button>

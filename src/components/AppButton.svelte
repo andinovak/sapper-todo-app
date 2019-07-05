@@ -8,7 +8,10 @@
   }
 
   // Export prop for secondary color theme
-  export let secondary;
+  export let secondary = false,
+    warn = false,
+    disabled,
+    hidden;
 </script>
 
 <style>
@@ -29,6 +32,12 @@
   button.secondary {
     background: var(--theme-secondary);
   }
+  button.warn {
+    background: var(--ui-warn);
+  }
+  button[disabled] {
+    background: var(--ui-dark-grey);
+  }
   button:hover:after {
     content: "";
     position: absolute;
@@ -42,6 +51,10 @@
   }
 </style>
 
-<button class:secondary on:click={click}>
+<button
+  class={warn ? `warn` : secondary ? `secondary` : ``}
+  {hidden}
+  {disabled}
+  on:click={click}>
   <slot />
 </button>
