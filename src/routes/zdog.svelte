@@ -1,6 +1,7 @@
 <script>
   import AppButton from "../components/AppButton.svelte";
-  import IconButton from "../components/IconButton.svelte";
+  import ZdogList from "../components/zdog/ZdogList.svelte";
+  import ZdogControls from "../components/zdog/ZdogControls.svelte";
   import { onMount } from "svelte";
   import Zdog from "zdog";
 
@@ -11,7 +12,6 @@
   // Adjustable properties
   $: data = {};
 
-  //   let stroke, height, width, color, translate, rotate;
   let name = `New Element`;
   let shape = `Rect`;
 
@@ -40,20 +40,17 @@
   }
 
   function add() {
-    if (`${name}` in elements) {
+    if (name in elements) {
       alert("Name is already taken");
     } else {
       let reference = new Zdog.Rect({ ...data });
       illo.updateRenderGraph(reference);
-
       let element = {};
       element[`${name}`] = {
         shape: shape,
         data: { ...data },
         reference: reference
       };
-
-      // Update elements with new object
       elements = { ...elements, ...element };
     }
   }
@@ -72,7 +69,6 @@
 
   function updateElement() {
     elements[name].reference.remove();
-
     elements[name] = {
       shape: shape,
       data: data,
@@ -86,99 +82,19 @@
   canvas {
     cursor: move;
     background: #333;
+    margin: 0 auto;
+    display: block;
   }
-  .form {
+  .controls {
+    width: 100%;
     display: flex;
-    flex-direction: column;
-    max-width: 600px;
+    justify-content: center;
   }
 </style>
 
 <h1>Zdog GUI</h1>
 <canvas class="zdog-canvas" width="600" height="400" />
-<div class="form">
-
-  <label for="zdog-shape">Name</label>
-  <input id="zdog-name" bind:value={name} placeholder="Name" />
-
-  <label for="zdog-color">Colour</label>
-  <input
-    on:change={() => {
-      updateElement();
-    }}
-    id="zdog-color"
-    type="color"
-    name="color"
-    bind:value={data.color} />
-
-  <label for="zdog-shape">Shape</label>
-  <select id="zdog-shape" bind:value={shape}>
-    <option value="Rect">Rect</option>
-  </select>
-
-  <label for="zdog-stroke">Stroke</label>
-  <input id="zdog-stroke" type="number" bind:value={data.stroke} min="1" />
-  <input
-    on:change={() => {
-      updateElement();
-    }}
-    type="range"
-    bind:value={data.stroke}
-    min="1"
-    max="10" />
-
-  <label for="zdog-height">Height</label>
-  <input id="zdog-height" type="number" bind:value={data.height} min="1" />
-  <input
-    on:change={() => {
-      updateElement();
-    }}
-    type="range"
-    bind:value={data.height}
-    min="1"
-    max="900" />
-
-  <label for="zdog-width">Width</label>
-  <input id="zdog-width" type="number" bind:value={data.width} min="1" />
-  <input
-    on:change={() => {
-      updateElement();
-    }}
-    type="range"
-    bind:value={data.width}
-    min="1"
-    max="900" />
+<div class="controls">
+  <ZdogControls {data} {name} {shape} {updateElement} {add} />
+  <ZdogList {keys} {name} {selectElement} {removeElement} />
 </div>
-<AppButton on:click={add}>New Shape</AppButton>
-<h2>Shapes:</h2>
-<ul>
-  {#each keys as key, i}
-    <li>
-      <AppButton
-        secondary={name == key}
-        on:click={() => {
-          selectElement(key);
-        }}>
-         {key}
-      </AppButton>
-
-      <!-- <AppButton
-        hidden={!(name == key)}
-        secondary
-        on:click={() => {
-          updateElement(key);
-        }}>
-        ♻️
-      </AppButton> -->
-
-      <AppButton
-        warn
-        hidden={!(name == key)}
-        on:click={() => {
-          removeElement(key);
-        }}>
-        🗑
-      </AppButton>
-    </li>
-  {/each}
-</ul>
