@@ -9,6 +9,7 @@
 
   // Export prop for secondary color theme
   export let secondary = false,
+    active = false,
     warn = false,
     disabled,
     hidden;
@@ -25,8 +26,8 @@
     padding: 0.5rem 1.5rem;
     border-radius: 0.3rem;
     cursor: pointer;
-    margin: 0.5rem 0;
-
+    margin: 0.5rem;
+    transition: all 0.4s ease;
     position: relative;
   }
   button.secondary {
@@ -49,10 +50,14 @@
     background: rgba(255, 255, 255, 0.3);
     pointer-events: none;
   }
+  button.active {
+    outline: 3px solid var(--theme-primary);
+    outline-offset: 2px;
+  }
 </style>
 
 <button
-  class={warn ? `warn` : secondary ? `secondary` : ``}
+  class={warn ? `warn` : secondary ? `secondary` : active ? `active` : ``}
   {hidden}
   {disabled}
   on:click={click}>

@@ -30,4 +30,4 @@
   }
 </style>
 
-<input class:secondary bind:value={text} />
+<input type="text" class:secondary bind:value={text} />
